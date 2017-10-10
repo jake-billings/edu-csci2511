@@ -7,16 +7,12 @@ Status: Runs on Python on my Mac
 """
 
 
-
-"""
-Implementation of a theoretical perfect strategy of the game from HW 2.9
-
-Executes one round of game play using this strategy (for player 2)
-
-decks - An array where the first element represents the number of cards in the left deck
-        and the second element represents the number of cards in the right deck;
-
-"""
+# Implementation of a theoretical perfect strategy of the game from HW 2.9
+#
+# Executes one round of game play using this strategy (for player 2)
+#
+# decks - An array where the first element represents the number of cards in the left deck
+#        and the second element represents the number of cards in the right deck.
 def strategy_perfect(decks):
     # If the left is empty, take all the cards from the right
     if decks[0] > 0:
