@@ -15,7 +15,7 @@ The Following file depends on the following game description from HW 2 of CSCI25
 
 # Implementation of a theoretical perfect strategy of the game from HW 2.9
 #
-# Executes one round of game play using this strategy (for player 2)
+# Executes one round of game play using this strategy (which is perfect for player 2)
 #
 # decks - An array where the first element represents the number of cards in the left deck
 #        and the second element represents the number of cards in the right deck.
@@ -28,18 +28,50 @@ def strategy_perfect(decks):
         raise Exception('Cannot execute a round of strategy on a complete game')
 
     # If the left is empty, take all the cards from the right
-    if decks[0] > 0:
+    if decks[0] == 0:
         decks[1] = 0
     # If the right is empty, take all the cards from the left
-    if decks[1] > 0:
+    elif decks[1] == 0:
         decks[0] = 0
 
     # If there is only one card in the left, take all the cards in the right except one
-    if decks[0] == 1:
+    elif decks[0] == 1:
         decks[1] = 1
 
     # Default strategy is to take all of the cards from the right except for one
-    decks[1] = 1
+    else:
+        decks[1] = 1
+
+    # Return the new state of the game
+    return decks
+
+
+# Passes strategic decisions to a human so that we can interact with the perfect strategy
+#
+# Executes one round of game play using human input as its strategy
+#
+# decks - An array where the first element represents the number of cards in the left deck
+#        and the second element represents the number of cards in the right deck.
+#
+# Returns an array representing the state of the decks array after the player has played one round
+def strategy_human(decks):
+    # If decks = [0, 0], the game has already halted. There are no cards to pick up.
+    #  Throw an error (raise an exception)
+    if (decks[0] + decks[1]) < 1:
+        raise Exception('Cannot execute a round of strategy on a complete game')
+
+    # Ask which deck to draw cards from
+    deck = -1
+    while not (0 <= deck < len(decks)) or decks[deck] < 1:
+        deck = input("Choose a deck with cards in it to draw from (0 or 1): ")
+
+    # Ask how many cards to draw from the deck
+    count = -1
+    while not (0 < count <= decks[deck]):
+        count = input('Choose how many cards to draw: ')
+
+    # Simulate drawing cards from the deck
+    decks[deck] -= count
 
     # Return the new state of the game
     return decks
@@ -68,7 +100,7 @@ def play_game(n, strategy_player_1, strategy_player_2):
     # The game halts when no cards remain on the table. The last player to pickup a card wins.
     #  Check if the game is over by adding the two decks together and checking if the sum is greater
     #  than 0.
-    while (decks[0] + decks[1]) < 1:
+    while (decks[0] + decks[1]) > 0:
         # If it's player 1's turn, execute player 1's strategy. If it's not player 1's turn,
         #  then it is player 2's turn. If it is player 2's turn, execute player 2's strategy.
         if player_1_turn:
@@ -123,4 +155,4 @@ def test():
 
 # If somebody actually runs this file, call the test() function.
 if __name__ == "__main__":
-    test()
+    play_game(2, strategy_human, strategy_perfect)
