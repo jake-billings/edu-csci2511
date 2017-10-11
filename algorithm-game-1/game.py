@@ -1,7 +1,7 @@
 """
 Name:   Jake Billings
 Date:   10/10/2017
-Class:  CSCI2511 Discrete Structures
+Class:  CSCI 2511 Discrete Structures
 Desc:   Implementation of a theoretical perfect strategy of the game from HW 2.9
 Status: Runs on Python on my Mac
 
