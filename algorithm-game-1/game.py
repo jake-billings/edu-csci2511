@@ -27,6 +27,7 @@ def strategy_perfect(decks):
     if (decks[0] + decks[1]) < 1:
         raise Exception('Cannot execute a round of strategy on a complete game')
 
+    # If the other player left us only one deck to draw from, we take the card and win.
     # If the left is empty, take all the cards from the right
     if decks[0] == 0:
         decks[1] = 0
@@ -34,9 +35,20 @@ def strategy_perfect(decks):
     elif decks[1] == 0:
         decks[0] = 0
 
+    # If the other player left only one card in either position, take all except one in the other.
+    #  This forces the other player to take one card and leave is in an automatic-win state.
     # If there is only one card in the left, take all the cards in the right except one
-    elif decks[0] == 1:
+    elif decks[0] == 1 and decks[1] > 1:
         decks[1] = 1
+    elif decks[1] == 1 and decks[0] > 1:
+        decks[0] = 1
+
+    # These will never happen but are included for complete-ness
+    #  We would be putting the other player in an automatic-win state
+    elif decks[0] == 1 and decks[1] == 1:
+        decks[0] = 0
+    elif decks[1] == 1 and decks[0] == 1:
+        decks[0] = 1
 
     # Default strategy is to take all of the cards from the right except for one
     else:
@@ -146,7 +158,13 @@ def test():
     else:
         print "Pass:\tPlayer 2 won a game where n=3"
 
-    # Test a game of 3-card piles and perfect strategy
+    # Test a game of 746-card piles and perfect strategy
+    if play_game(746, strategy_perfect, strategy_perfect):
+        print "Error:\tPlayer 1 won game won when it shouldn't have."
+    else:
+        print "Pass:\tPlayer 2 won a game where n=746"
+
+    # Test a game of 1024-card piles and perfect strategy
     if play_game(1024, strategy_perfect, strategy_perfect):
         print "Error:\tPlayer 1 won game won when it shouldn't have."
     else:
@@ -155,4 +173,15 @@ def test():
 
 # If somebody actually runs this file, call the test() function.
 if __name__ == "__main__":
-    play_game(2, strategy_human, strategy_perfect)
+    # Test the algorithm before letting Humans play with it
+    print "-"*38+"Test"+"-"*38
+    test()
+    print "-"*36+"End Test"+"-"*36
+
+    # Let a human play against the machine in a game where n=2000
+    player_1_won = play_game(2000, strategy_human, strategy_perfect)
+
+    if player_1_won:
+        print "The human beat the machine. This will never happen."
+    else:
+        print "The machine beat the human. What a surprise."
