@@ -7,6 +7,7 @@ Desc:   Implementation of a prime-checking algorithm for problem 4.3.1 of the mi
 # Import time so that we can benchmark the algorithm
 from time import time
 
+
 # Check if i is prime using the simplest algorithm I could think of.
 # There ARE ways to optimize this algorithm. I don't know how to derive
 # or prove them yet.
@@ -42,15 +43,19 @@ if __name__ == "__main__":
 
     # Check user input forever
     while True:
+        # Accept the user input
         i = input("Number to check: ")
 
+        # Measure the start and end time when checking the primes
         start = time()
         state = is_prime(i)
         end = time()
 
+        # Print a message to tell the user if it's prime
         if is_prime(i):
             print i, "is prime."
         else:
             print i, "is not prime."
 
+        # Print how long it took
         print "Done in ", end-start, "seconds."
