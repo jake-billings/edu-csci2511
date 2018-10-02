@@ -1,5 +1,7 @@
 # edu-csci2511 #
 
+[![DOI](https://zenodo.org/badge/104122814.svg)](https://zenodo.org/badge/latestdoi/104122814)
+
 Classwork related to CSCI2511 Discrete Structures at University of Colorado Denver
 
 This is a repository I use to backup my work for the class CSCI2511 Discrete Structures at University of Colorado Denver. Adhere to the university's honor code for work in the class.
